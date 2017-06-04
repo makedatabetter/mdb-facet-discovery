@@ -16,6 +16,11 @@ The following custom properties and mixins are available for styling:
 Custom property | Description | Default
 ----------------|-------------|----------
 `--mdb-facet-title` | Mixin applied to facet title | `{}`
+`--mdb-facet-container-top-margin` | Top margin applied to facet row container | `20px`
+`--mdb-facet-container` | Mixin applied to each facet row | `{}`
+`--mdb-facet` | Mixin applied to each facet | `{}`
+`--mdb-facet-recommendation` | Mixin applied to each facet recommendation section | `{}`
+`--mdb-facet-recommendation-button` | Mixin applied to each radio button recommendation section | `{}`
 
 @demo demo/index.html 
 -->
@@ -34,14 +39,21 @@ Custom property | Description | Default
       }
 
        :host .facet {
-        margin-top: var(--standard-padding, 20px);
-        height: var(--facet-recommendation-height, 24px);
+        margin-top: var(--mdb-facet-container-top-margin, 20px);
         @apply(--layout);
         @apply(--layout-justified);
+        @apply(--mdb-facet-container);
       }
 
        :host paper-checkbox {
-        line-height: var(--facet-recommendation-height, 24px);
+        @apply(--mdb-facet);
+      }
+
+       :host mdb-radio-list {
+         --mdb-radio-list-button:{
+           @apply(--mdb-facet-recommendation-button);
+         }
+        @apply(--mdb-facet-recommendation);
       }
     </style>
     <div>
