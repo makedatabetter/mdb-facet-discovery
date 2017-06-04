@@ -1,8 +1,21 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../mdb-title/mdb-title.html">
+<link rel="import" href="../mdb-radio-list/mdb-radio-list.html">
+<link rel="import" href="../mdb-search-box/mdb-search-box.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
 
 <!--
 `mdb-facet-discovery`
 
+### Styling
+
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--mdb-facet-title` | Mixin applied to facet title | `{}`
 
 @demo demo/index.html 
 -->
@@ -10,11 +23,43 @@
 <dom-module id="mdb-facet-discovery">
   <template>
     <style>
-      :host {
+       :host {
         display: block;
       }
+
+       :host mdb-title {
+        --mdb-title: {
+          @apply(--mdb-facet-title);
+        }
+      }
+
+       :host .facet {
+        margin-top: var(--standard-padding, 20px);
+        height: var(--facet-recommendation-height, 24px);
+        @apply(--layout);
+        @apply(--layout-justified);
+      }
+
+       :host paper-checkbox {
+        line-height: var(--facet-recommendation-height, 24px);
+      }
     </style>
-    <h2>Hello [[prop1]]</h2>
+    <div>
+      <mdb-title help-text="[[helpText]]" level="3">[[facetType]]</mdb-title>
+      <mdb-search-box></mdb-search-box>
+      <template is="dom-repeat" items="{{facets}}">
+        <div class="facet">
+          <paper-checkbox>[[item.name]] ([[item.recommendationFactor]])</paper-checkbox>
+          <template is="dom-if" if="{{_isDefineMode(mode)}}">
+            <mdb-radio-list size="small" data-facet$="[[item.name]]" selected="{{item.recommended}}" on-paper-radio-group-changed="_facetRecommendationChanged">
+              <paper-radio-button name="yes">YES</paper-radio-button>
+              <paper-radio-button name="no">NO</paper-radio-button>
+              <paper-radio-button name="maybe">MAYBE</paper-radio-button>
+            </mdb-radio-list>
+          </template>
+        </div>
+      </template>
+    </div>
   </template>
 
   <script>
@@ -23,11 +68,39 @@
       is: 'mdb-facet-discovery',
 
       properties: {
-        prop1: {
+        facetType: {
           type: String,
-          value: 'mdb-facet-discovery',
+          value: ''
         },
+
+        helpText: {
+          type: String,
+          value: ''
+        },
+
+        mode: {
+          type: String,
+          value: '',
+          reflectToAttribute: true
+        },
+
+        facets: {
+          type: Array,
+          value: []
+        }
       },
+
+      _facetRecommendationChanged: function (e) {
+        var facet = e.currentTarget.attributes.getNamedItem('data-facet').value;
+        this.fire('facet-recommendation-changed', {
+          facet: facet,
+          recommended: e.currentTarget.selected
+        });
+      },
+
+      _isDefineMode: function (mode) {
+        return mode === 'define';
+      }
 
     });
   </script>
