@@ -46,7 +46,7 @@ Custom property | Description | Default
     </style>
     <div>
       <mdb-title help-text="[[helpText]]" level="3">[[facetType]]</mdb-title>
-      <mdb-search-box></mdb-search-box>
+      <mdb-search-box placeholder="Search [[_getPlaceholder(facetType)]]"></mdb-search-box>
       <template is="dom-repeat" items="{{facets}}">
         <div class="facet">
           <paper-checkbox>[[item.name]] ([[item.recommendationFactor]])</paper-checkbox>
@@ -88,6 +88,10 @@ Custom property | Description | Default
           type: Array,
           value: []
         }
+      },
+
+      _getPlaceholder: function (type) {
+        return (type || '').toLowerCase();
       },
 
       _facetRecommendationChanged: function (e) {
