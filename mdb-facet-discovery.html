@@ -30,7 +30,7 @@ Custom property | Description | Default
       }
 
        :host .facet {
-        margin-top: var(--mdb-facet-container-top-margin, 20px);
+        margin-top: calc(var(--standard-padding, 20px)/2);
         @apply(--layout);
         @apply(--layout-justified);
         @apply(--mdb-facet-container);
@@ -40,6 +40,11 @@ Custom property | Description | Default
         position: relative;
         right: 10px;
         color: #aaa;
+      }
+
+       :host mdb-search-box {
+        padding-top: 20px;
+        padding-bottom: 20px;
       }
     </style>
     <div>
