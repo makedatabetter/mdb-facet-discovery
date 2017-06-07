@@ -69,13 +69,13 @@ Custom property | Description | Default
             <template is="dom-if" if="{{_isDefineMode(mode)}}">
               <mdb-radio-list size="small" data-facet$="[[item.name]]" selected="{{item.recommended}}" on-paper-radio-group-changed="_facetRecommendationChanged">
                 <paper-radio-button name="yes">
-                  <iron-icon suffix icon="icons:check"></iron-icon>
+                  &#x2713;
                 </paper-radio-button>
                 <paper-radio-button name="no">
-                  <iron-icon suffix icon="icons:clear"></iron-icon>
+                  &#x2717;
                 </paper-radio-button>
                 <paper-radio-button name="maybe">
-                  <iron-icon suffix icon="icons:help-outline"></iron-icon>
+                  ?
                 </paper-radio-button>
               </mdb-radio-list>
             </template>
